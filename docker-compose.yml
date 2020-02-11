@@ -1,4 +1,4 @@
-version: '2'
+version: '2.1'
 services:
     core-service:
       build:
@@ -7,10 +7,16 @@ services:
       ports: 
           - 8080:8080
       depends_on:
-          - db
+          db:
+             condition: service_healthy
     db:
         container_name: marvel_db
         image: postgres:9.5
+        healthcheck:
+            test: [ "CMD", "pg_isready", "-q", "-d", "marvel", "-U", "postgres" ]
+            timeout: 45s
+            interval: 10s
+            retries: 10
         environment:
             - POSTGRES_PASSWORD=postgres
             - POSTGRES_USER=postgres
