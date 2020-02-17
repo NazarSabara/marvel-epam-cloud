@@ -1,0 +1,45 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1563877765929-1
+      author: Nazar Sabara
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: user_pk
+                  name: id
+                  type: TEXT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: username
+                  type: TEXT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: password
+                  type: TEXT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: email
+                  type: TEXT
+              - column:
+                  constraints:
+                    nullable: true
+                  name: birth_date
+                  type: DATE
+              - column:
+                  constraints:
+                    nullable: true
+                  name: info
+                  type: TEXT
+            tableName: t_user
+
+        - addUniqueConstraint:
+            tableName: t_user
+            constraintName: username_email_key
+            columnNames: username, email
+            validate: true

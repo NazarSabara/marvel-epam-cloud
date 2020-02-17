@@ -1,24 +1,25 @@
-version: '2.1'
+version: '3.7'
 services:
     core-service:
       build:
        context: core-service
        dockerfile: Dockerfile
-      network_mode: bridge
+      environment: 
+        SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/marvel
+        SPRING_DATASOURCE_USERNAME: postgres
+        SPRING_DATASOURCE_PASSWORD: postgres   
+      restart: always
+      depends_on: 
+        - db        
       ports: 
           - 8080:8080
-      depends_on:
-          db:
-             condition: service_healthy
+      networks:
+          - backend
+          
     db:
         container_name: marvel_db
         image: postgres:9.5
-        network_mode: bridge
-        healthcheck:
-            test: [ "CMD", "pg_isready", "-q", "-d", "marvel", "-U", "postgres" ]
-            timeout: 45s
-            interval: 10s
-            retries: 10
+        restart: always
         environment:
             - POSTGRES_PASSWORD=postgres
             - POSTGRES_USER=postgres
@@ -27,3 +28,13 @@ services:
             - 5432
         ports:
             - 5432:5432
+        networks:
+            - backend
+        volumes:
+            - db-data:/var/lib/postgres
+
+volumes:
+  db-data:
+
+networks:
+  backend:   
