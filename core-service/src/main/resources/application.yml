@@ -10,4 +10,3 @@ spring:
 
   liquibase:
     change-log: classpath:/db/changelog/db.changelog.yml
-    dropFirst: true

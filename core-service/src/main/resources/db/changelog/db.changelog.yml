@@ -10,32 +10,28 @@ databaseChangeLog:
                     primaryKey: true
                     primaryKeyName: user_pk
                   name: id
-                  type: TEXT
+                  type: VARCHAR(25)
               - column:
                   constraints:
                     nullable: false
                   name: username
-                  type: TEXT
+                  type: VARCHAR(25)
               - column:
                   constraints:
                     nullable: false
                   name: password
-                  type: TEXT
+                  type: VARCHAR(25)
               - column:
                   constraints:
                     nullable: false
                   name: email
-                  type: TEXT
+                  type: VARCHAR(25)
               - column:
-                  constraints:
-                    nullable: true
                   name: birth_date
                   type: DATE
               - column:
-                  constraints:
-                    nullable: true
                   name: info
-                  type: TEXT
+                  type: VARCHAR(25)
             tableName: t_user
 
         - addUniqueConstraint:

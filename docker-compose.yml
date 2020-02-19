@@ -13,8 +13,6 @@ services:
         - db        
       ports: 
           - 8080:8080
-      networks:
-          - backend
           
     db:
         container_name: marvel_db
@@ -28,13 +26,8 @@ services:
             - 5432
         ports:
             - 5432:5432
-        networks:
-            - backend
         volumes:
             - db-data:/var/lib/postgres
 
 volumes:
   db-data:
-
-networks:
-  backend:   
