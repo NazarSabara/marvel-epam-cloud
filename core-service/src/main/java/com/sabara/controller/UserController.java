@@ -1,8 +1,8 @@
 package com.sabara.controller;
 
-import com.sabara.svc.UserService;
-import com.sabara.svc.model.User;
-import javax.inject.Inject;
+import com.sabara.model.User;
+import com.sabara.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,22 +18,18 @@ public class UserController {
 
   private final UserService service;
 
-  @Inject
+  @Autowired
   public UserController(UserService service) {
     this.service = service;
   }
 
-  public UserService getService() {
-    return service;
+  @GetMapping(value = "/{id}")
+  ResponseEntity<User> getUser(@PathVariable long id){
+    return ResponseEntity.ok(service.getUserById(id));
   }
 
-  @GetMapping(value = "/{id}", produces = "application/json")
-  ResponseEntity<User> getUser(@PathVariable String id){
-    return new ResponseEntity<>(getService().getUserById(id), HttpStatus.OK);
-  }
-
-  @PostMapping(consumes = "application/json")
+  @PostMapping
   ResponseEntity<User> createUser(@RequestBody User user){
-    return new ResponseEntity<>(getService().addUser(user), HttpStatus.CREATED);
+    return new ResponseEntity<>(service.addUser(user), HttpStatus.CREATED);
   }
 }

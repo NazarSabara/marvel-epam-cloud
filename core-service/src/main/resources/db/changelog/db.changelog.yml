@@ -9,11 +9,13 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
                     primaryKeyName: user_pk
+                  autoIncrement: true
                   name: id
-                  type: VARCHAR(25)
+                  type: INT
               - column:
                   constraints:
                     nullable: false
+                    unique: true
                   name: username
                   type: VARCHAR(25)
               - column:
@@ -24,6 +26,7 @@ databaseChangeLog:
               - column:
                   constraints:
                     nullable: false
+                    unique: true
                   name: email
                   type: VARCHAR(25)
               - column:
@@ -33,9 +36,3 @@ databaseChangeLog:
                   name: info
                   type: VARCHAR(25)
             tableName: t_user
-
-        - addUniqueConstraint:
-            tableName: t_user
-            constraintName: username_email_key
-            columnNames: username, email
-            validate: true

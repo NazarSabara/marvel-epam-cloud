@@ -1,29 +1,19 @@
-version: '3.7'
+version: '2.1'
 services:
     core-service:
-      build:
-       context: core-service
-       dockerfile: Dockerfile
-      environment: 
-        SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/marvel
-        SPRING_DATASOURCE_USERNAME: postgres
-        SPRING_DATASOURCE_PASSWORD: postgres   
-      restart: always
-      depends_on: 
-        - db        
+      build: ./core-service
+      restart: on-failure     
       ports: 
           - 8080:8080
           
     db:
         container_name: marvel_db
         image: postgres:9.5
-        restart: always
+        restart: on-failure
         environment:
             - POSTGRES_PASSWORD=postgres
             - POSTGRES_USER=postgres
             - POSTGRES_DB=marvel
-        expose:
-            - 5432
         ports:
             - 5432:5432
         volumes:
