@@ -1,4 +1,4 @@
-package com.sabara.model;
+package com.sabara.model.entity;
 
 import java.sql.Date;
 import javax.persistence.Column;

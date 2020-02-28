@@ -1,13 +1,14 @@
 package com.sabara.service;
 
-import com.sabara.model.User;
+import com.sabara.model.entity.User;
 import com.sabara.exception.ResourceNotFoundException;
 import com.sabara.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class UserService {
 
   private final UserRepository repository;
