@@ -11,7 +11,7 @@ databaseChangeLog:
                     primaryKeyName: hero_pk
                   autoIncrement: true
                   name: id
-                  type: INT
+                  type: BIGINT
               - column:
                   constraints:
                     nullable: false
@@ -32,7 +32,10 @@ databaseChangeLog:
                   type: VARCHAR(25)
               - column:
                   name: appearance_id
-                  type: INT
+                  type: BIGINT
+                  contraints:
+                    foreignKeyName: fk_appearance_id
+                    references: appearance(id)
             tableName: hero
         - createTable:
             columns:
@@ -42,24 +45,30 @@ databaseChangeLog:
                     primaryKeyName: group_pk
                   autoIncrement: true
                   name: id
-                  type: INT
+                  type: BIGINT
               - column:
                   constraints:
                     nullable: false
                     unique: true
                   name: name
                   type: VARCHAR(25)
-            tableName: t_group
+            tableName: alliance
         - createTable:
             columns:
               - column:
                   autoIncrement: true
                   name: hero_id
-                  type: INT
+                  type: BIGINT
+                  contraints:
+                    foreignKeyName: fk_hero_id
+                    references: hero(id)
               - column:
                   autoIncrement: true
                   name: group_id
-                  type: INT
+                  type: BIGINT
+                  contraints:
+                    foreignKeyName: fk_alliance_id
+                    references: alliance(id)
             tableName: hero_group
         - createTable:
             columns:
@@ -69,7 +78,7 @@ databaseChangeLog:
                     primaryKeyName: appearance_pk
                   autoIncrement: true
                   name: id
-                  type: INT
+                  type: BIGINT
               - column:
                   name: race
                   type: VARCHAR(25)
