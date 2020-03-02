@@ -1,6 +1,6 @@
 package com.sabara.model.resource;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,6 +10,6 @@ public class UserResource {
 
   private String username;
   private String email;
-  private Date birthDate;
+  private LocalDate birthDate;
   private String info;
 }

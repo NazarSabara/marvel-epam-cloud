@@ -35,4 +35,4 @@ databaseChangeLog:
               - column:
                   name: info
                   type: VARCHAR(25)
-            tableName: t_user
+            tableName: account

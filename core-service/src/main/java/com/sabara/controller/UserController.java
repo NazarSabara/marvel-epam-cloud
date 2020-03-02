@@ -3,7 +3,6 @@ package com.sabara.controller;
 import com.sabara.model.entity.User;
 import com.sabara.model.resource.UserResource;
 import com.sabara.service.UserService;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,14 +22,7 @@ public class UserController {
 
   @GetMapping(value = "/{id}")
   ResponseEntity<UserResource> getUser(@PathVariable long id) {
-    return ResponseEntity.ok(Optional.of(service.getUserById(id))
-        .map(user -> UserResource.builder()
-            .username(user.getUsername())
-            .email(user.getEmail())
-            .birthDate(user.getBirthDate())
-            .info(user.getInfo())
-            .build())
-        .get());
+    return ResponseEntity.ok(service.getUserById(id));
   }
 
   @PostMapping
