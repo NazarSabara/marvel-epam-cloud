@@ -35,6 +35,6 @@ databaseChangeLog:
               - column:
                   name: info
                   type: VARCHAR(25)
-            tableName: t_user
+            tableName: account
   - include:
       file: classpath:/db/changelog/db.changelog-0.1.yaml
