@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1563877765929-1
+      author: Nazar Sabara
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: user_pk
+                  autoIncrement: true
+                  name: id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                    unique: true
+                  name: username
+                  type: VARCHAR(25)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: password
+                  type: VARCHAR(25)
+              - column:
+                  constraints:
+                    nullable: false
+                    unique: true
+                  name: email
+                  type: VARCHAR(25)
+              - column:
+                  name: birth_date
+                  type: DATE
+              - column:
+                  name: info
+                  type: VARCHAR(25)
+            tableName: account

@@ -1,0 +1,12 @@
+spring:
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://hero-db:5432/hero
+    username: postgres
+    password: postgres
+    hikari:
+      idle-timeout: 10000
+
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog.yml
