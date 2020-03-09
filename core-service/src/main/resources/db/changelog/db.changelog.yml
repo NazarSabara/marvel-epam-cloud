@@ -37,4 +37,4 @@ databaseChangeLog:
                   type: VARCHAR(25)
             tableName: account
   - include:
-      file: classpath:/db/changelog/db.changelog-0.1.yaml
+      file: classpath:/db/changelog/db.changelog-0.1.yml

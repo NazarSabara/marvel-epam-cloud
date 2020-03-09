@@ -16,6 +16,7 @@
 
 	<properties>
 		<java.version>11</java.version>
+		<openfeign.version>2.2.2.RELEASE</openfeign.version>
 		<postgre.version>42.2.10</postgre.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<lombok.version>1.18.12</lombok.version>
@@ -25,6 +26,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+			<version>${openfeign.version}</version>
 		</dependency>
 
 		<dependency>
@@ -51,6 +58,12 @@
 	</dependencies>
 
 	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
 		<finalName>${project.artifactId}</finalName>
 	</build>
 

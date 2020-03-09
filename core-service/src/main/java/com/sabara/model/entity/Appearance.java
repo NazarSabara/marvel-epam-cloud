@@ -18,10 +18,10 @@ public class Appearance {
   private long id;
   @Column(name = "race", columnDefinition = "VARCHAR(25)")
   private String race;
-  @Column(name = "height", columnDefinition = "DOUBLE")
-  private double height;
-  @Column(name = "weight", columnDefinition = "DOUBLE")
-  private double weight;
+  @Column(name = "height", columnDefinition = "VARCHAR(25)")
+  private String height;
+  @Column(name = "weight", columnDefinition = "VARCHAR(25)")
+  private String weight;
   @Column(name = "eyes", columnDefinition = "VARCHAR(25)")
   private String eyes;
   @Column(name = "hair", columnDefinition = "VARCHAR(25)")
