@@ -8,8 +8,8 @@ import lombok.Data;
 public class AppearanceResource {
 
   private String race;
-  private String height;
-  private String weight;
+  private Double height;
+  private Double weight;
   private String eyes;
   private String hair;
 }

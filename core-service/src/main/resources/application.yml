@@ -10,3 +10,7 @@ spring:
 
   liquibase:
     change-log: classpath:/db/changelog/db.changelog.yml
+
+event:
+  listener:
+    enabled: true

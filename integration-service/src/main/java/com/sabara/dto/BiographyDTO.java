@@ -1,13 +1,13 @@
-package com.sabara.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+package com.sabara.dto;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.List;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class Biography {
+public class BiographyDTO {
 
     private List<String> aliases;
     private String alignment;
@@ -20,4 +20,5 @@ public class Biography {
     @JsonProperty("place-of-birth")
     private String placeOfBirth;
     private String publisher;
+
 }

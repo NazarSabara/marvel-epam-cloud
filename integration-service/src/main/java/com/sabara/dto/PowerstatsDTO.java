@@ -1,9 +1,10 @@
-package com.sabara.model.entity;
+
+package com.sabara.dto;
 
 import lombok.Data;
 
 @Data
-public class Powerstats {
+public class PowerstatsDTO {
 
     private String combat;
     private String durability;
@@ -11,5 +12,4 @@ public class Powerstats {
     private String power;
     private String speed;
     private String strength;
-
 }

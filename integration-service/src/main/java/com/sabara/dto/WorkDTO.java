@@ -1,10 +1,10 @@
 
-package com.sabara.model.entity;
+package com.sabara.dto;
 
 import lombok.Data;
 
 @Data
-public class Work {
+public class WorkDTO {
 
     private String base;
     private String occupation;

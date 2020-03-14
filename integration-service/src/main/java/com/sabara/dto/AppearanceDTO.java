@@ -1,11 +1,15 @@
-package com.sabara.model.entity;
 
+package com.sabara.dto;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.List;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
-public class Appearance {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class AppearanceDTO {
 
     @JsonProperty("eye-color")
     private String eyeColor;
@@ -15,4 +19,5 @@ public class Appearance {
     private List<String> height;
     private String race;
     private List<String> weight;
+
 }
