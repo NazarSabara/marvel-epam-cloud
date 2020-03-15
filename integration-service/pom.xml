@@ -34,12 +34,6 @@
       <version>${openfeign.version}</version>
     </dependency>
 
-<!--    <dependency>-->
-<!--      <groupId>org.springframework.cloud</groupId>-->
-<!--      <artifactId>spring-cloud-netflix-hystrix</artifactId>-->
-<!--      <version>${hystrix.version}</version>-->
-<!--    </dependency>-->
-
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>

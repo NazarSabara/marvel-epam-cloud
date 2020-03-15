@@ -14,12 +14,12 @@ import java.util.List;
 public class BattleController {
 
     @PostMapping("/pvp")
-    public BattleResults playerVsPlayerBattle(@RequestBody List<HeroDTO> heroes){
+    public BattleResults playerVsPlayerBattle(@RequestBody HeroDTO firstHero, @RequestBody HeroDTO secondHero){
         return null;
     }
 
     @PostMapping("/tvt")
-    public BattleResults teamVsTeamBattle(@RequestBody List<HeroDTO> heroes){
+    public BattleResults teamVsTeamBattle(@RequestBody List<HeroDTO> firstTeam, @RequestBody List<HeroDTO> secondTeam){
         return null;
     }
 }

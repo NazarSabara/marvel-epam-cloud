@@ -10,22 +10,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Optional;
 
-@FeignClient(name = "SuperHero", url = "https://superheroapi.com/api/${api_key}")
+@FeignClient(name = "SuperHero", url = "${api_url}${api_key}")
 public interface SuperHeroClient {
 
-  @GetMapping(value = "/{id}")
-  Optional<HeroDTO> getHeroById(@PathVariable String id);
+  @GetMapping("/{id}")
+  Optional<HeroDTO> getHeroById(@PathVariable long id);
 
-  @GetMapping(value = "/{id}/powerstats")
-  Optional<PowerstatsDTO> getPowerstats(@PathVariable String id);
+  @GetMapping("/{id}/powerstats")
+  Optional<PowerstatsDTO> getPowerstats(@PathVariable long id);
 
-  @GetMapping(value = "/{id}/appearance")
-  Optional<AppearanceDTO> getAppearance(@PathVariable String id);
+  @GetMapping("/{id}/appearance")
+  Optional<AppearanceDTO> getAppearance(@PathVariable long id);
 
-  @GetMapping(value = "/search/{name}")
+  @GetMapping("/search/{name}")
   SearchDTO searchByName(@PathVariable String name);
 
-  @GetMapping(value = "/search/_")
+  @GetMapping("/search/_")
   SearchDTO getAllHeroes();
 
 }

@@ -11,9 +11,9 @@ import java.util.List;
 @FeignClient(name = "integration-service", url = "integration-service:8081")
 public interface IntegrationServiceClient {
 
-  @GetMapping(value = "/{id}")
+  @GetMapping("/{id}")
   HeroResource getHeroById(@PathVariable Long id);
 
-  @GetMapping(value = "/search/all")
+  @GetMapping("/all")
   List<HeroResource> getAllHeroes();
 }

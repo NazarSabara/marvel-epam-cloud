@@ -2,8 +2,6 @@ package com.sabara.controller;
 
 import com.sabara.model.resource.HeroResource;
 import com.sabara.service.HeroService;
-import com.sabara.service.IntegrationServiceClient;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +17,7 @@ public class HeroController {
 
   private final HeroService service;
 
-  @GetMapping(value = "/{id}")
+  @GetMapping("/{id}")
   ResponseEntity<HeroResource> getHero(@PathVariable long id) {
     return ResponseEntity.ok(service.getHeroById(id));
   }

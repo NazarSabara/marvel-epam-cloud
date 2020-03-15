@@ -19,27 +19,27 @@ public class HeroController {
 
   private final HeroService heroService;
 
-  @GetMapping(value = "/{id}")
-  public HeroResource getHeroById(@PathVariable String id){
+  @GetMapping("/{id:\\d+}")
+  public HeroResource getHeroById(@PathVariable long id){
     return heroService.getHeroById(id);
   }
 
-  @GetMapping(value = "/{id}/appearance")
-  public AppearanceResource getAppearance(@PathVariable String id){
+  @GetMapping("/{id:\\d+}/appearance")
+  public AppearanceResource getAppearance(@PathVariable long id){
     return heroService.getAppearance(id);
   }
 
-  @GetMapping(value = "/{id}/powerstats")
-  public PowerstatsResource getPowerstats(@PathVariable String id){
+  @GetMapping("/{id:\\d+}/powerstats")
+  public PowerstatsResource getPowerstats(@PathVariable long id){
     return heroService.getPowerstats(id);
   }
 
-  @GetMapping(value = "search/all")
+  @GetMapping("/all")
   public List<HeroResource> getAllHeroes() {
     return heroService.getAllHeroes();
   }
 
-  @GetMapping(value = "search/{name}")
+  @GetMapping("search/{name}")
   public List<HeroResource> getAllHeroes(@PathVariable String name) {
     return heroService.searchByName(name);
   }

@@ -20,7 +20,7 @@ public class UserController {
 
   private final UserService service;
 
-  @GetMapping(value = "/{id}")
+  @GetMapping("/{id}")
   ResponseEntity<UserResource> getUser(@PathVariable long id) {
     return ResponseEntity.ok(service.getUserById(id));
   }

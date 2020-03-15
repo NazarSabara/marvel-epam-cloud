@@ -10,11 +10,7 @@ import java.util.Set;
 public class HeroDTO {
 
   private String name;
-  private String fullname;
-  private String placeOfBirth;
-  private String work;
   private String photo;
   private AppearanceDTO appearance;
-  private Set<String> groups;
 
 }
