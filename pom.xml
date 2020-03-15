@@ -19,6 +19,7 @@
 	<modules>
 		<module>core-service</module>
 		<module>integration-service</module>
+		<module>simulation-service</module>
 	</modules>
 
 </project>

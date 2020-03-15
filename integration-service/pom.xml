@@ -17,7 +17,6 @@
   <properties>
     <java.version>11</java.version>
     <openfeign.version>2.2.2.RELEASE</openfeign.version>
-    <hystrix.version>2.1.5.RELEASE</hystrix.version>
     <apache.commons.version>3.9</apache.commons.version>
     <lombok.version>1.18.12</lombok.version>
   </properties>

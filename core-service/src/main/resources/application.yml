@@ -2,7 +2,7 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://hero-db:5432/hero
+    url: jdbc:postgresql://localhost:5432/hero
     username: postgres
     password: postgres
     hikari:
@@ -10,6 +10,10 @@ spring:
 
   liquibase:
     change-log: classpath:/db/changelog/db.changelog.yml
+
+feign:
+  hystrix:
+    enabled=true:
 
 event:
   listener:

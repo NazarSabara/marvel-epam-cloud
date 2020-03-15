@@ -4,15 +4,15 @@ import com.sabara.model.resource.HeroResource;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.Optional;
 
-@FeignClient(name = "integration-service", url = "integration-service:8081")
+@FeignClient(name = "integration-service", url = "localhost:8081", fallbackFactory = IntegrationServiceFallbackFactory.class )
 public interface IntegrationServiceClient {
 
   @GetMapping("/{id}")
-  HeroResource getHeroById(@PathVariable Long id);
+  Optional<HeroResource> getHeroById(@PathVariable Long id);
 
   @GetMapping("/all")
   List<HeroResource> getAllHeroes();
