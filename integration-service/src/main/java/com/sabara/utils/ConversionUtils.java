@@ -1,7 +1,10 @@
 package com.sabara.utils;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static java.lang.Double.parseDouble;
 import static org.apache.commons.lang3.StringUtils.*;
@@ -28,10 +31,9 @@ public class ConversionUtils {
     }
 
     private static Double parseUnits(String value, Map<String, Integer> map){
-        if(isBlank(value)){
-            return null;
-        }
-
-        return map.getOrDefault(substringAfter(value, " "), 0) * parseDouble(getDigits(value));
+        return Optional.ofNullable(value)
+                .filter(StringUtils::isNotBlank)
+                .map(v -> map.getOrDefault(substringAfter(v, " "), 0) * parseDouble(getDigits(v)))
+                .orElse(null);
     }
 }
