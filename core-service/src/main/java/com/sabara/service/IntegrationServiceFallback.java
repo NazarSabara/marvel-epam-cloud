@@ -26,7 +26,6 @@ public class IntegrationServiceFallback implements IntegrationServiceClient {
             logger.error("Something went wrong.");
         }
 
-
         return Optional.empty();
     }
 
