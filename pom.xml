@@ -5,11 +5,21 @@
 	<groupId>com.sabara</groupId>
 	<artifactId>marvel-epam-cloud</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>marvel-epam-cloud</name>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-openfeign-core</artifactId>
+            <version>2.2.2.RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+    <name>marvel-epam-cloud</name>
 	<packaging>pom</packaging>
 
 	<modules>
 		<module>core-service</module>
+		<module>integration-service</module>
+		<module>simulation-service</module>
 	</modules>
 
 </project>

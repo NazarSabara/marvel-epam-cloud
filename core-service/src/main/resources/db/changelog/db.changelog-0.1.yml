@@ -8,6 +8,31 @@ databaseChangeLog:
               - column:
                   constraints:
                     primaryKey: true
+                    primaryKeyName: appearance_pk
+                  autoIncrement: true
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: race
+                  type: VARCHAR(350)
+              - column:
+                  name: height
+                  type: DOUBLE
+              - column:
+                  name: weight
+                  type: DOUBLE
+              - column:
+                  name: eyes
+                  type: VARCHAR(350)
+              - column:
+                  name: hair
+                  type: VARCHAR(350)
+            tableName: appearance
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    primaryKey: true
                     primaryKeyName: hero_pk
                   autoIncrement: true
                   name: id
@@ -17,23 +42,23 @@ databaseChangeLog:
                     nullable: false
                     unique: true
                   name: name
-                  type: VARCHAR(25)
+                  type: VARCHAR(350)
               - column:
                   name: fullname
-                  type: VARCHAR(25)
+                  type: VARCHAR(350)
               - column:
                   name: place_of_birth
-                  type: VARCHAR(25)
+                  type: VARCHAR(350)
               - column:
                   name: work
-                  type: VARCHAR(25)
+                  type: VARCHAR(350)
               - column:
                   name: photo
-                  type: VARCHAR(25)
+                  type: VARCHAR(350)
               - column:
                   name: appearance_id
                   type: BIGINT
-                  contraints:
+                  constraints:
                     foreignKeyName: fk_appearance_id
                     references: appearance(id)
             tableName: hero
@@ -49,9 +74,8 @@ databaseChangeLog:
               - column:
                   constraints:
                     nullable: false
-                    unique: true
                   name: name
-                  type: VARCHAR(25)
+                  type: VARCHAR(350)
             tableName: alliance
         - createTable:
             columns:
@@ -59,39 +83,14 @@ databaseChangeLog:
                   autoIncrement: true
                   name: hero_id
                   type: BIGINT
-                  contraints:
+                  constraints:
                     foreignKeyName: fk_hero_id
                     references: hero(id)
               - column:
                   autoIncrement: true
                   name: group_id
                   type: BIGINT
-                  contraints:
+                  constraints:
                     foreignKeyName: fk_alliance_id
                     references: alliance(id)
             tableName: hero_group
-        - createTable:
-            columns:
-              - column:
-                  constraints:
-                    primaryKey: true
-                    primaryKeyName: appearance_pk
-                  autoIncrement: true
-                  name: id
-                  type: BIGINT
-              - column:
-                  name: race
-                  type: VARCHAR(25)
-              - column:
-                  name: height
-                  type: DOUBLE
-              - column:
-                  name: weight
-                  type: DOUBLE
-              - column:
-                  name: eyes
-                  type: VARCHAR(25)
-              - column:
-                  name: hair
-                  type: VARCHAR(25)
-            tableName: appearance

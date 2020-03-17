@@ -1,11 +1,11 @@
-package com.sabara.model.resource;
+package com.sabara.dto;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class AppearanceResource {
+public class AppearanceDTO {
 
   private String race;
   private Double height;

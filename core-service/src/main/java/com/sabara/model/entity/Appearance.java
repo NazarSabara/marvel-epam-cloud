@@ -15,16 +15,16 @@ public class Appearance {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id;
-  @Column(name = "race", columnDefinition = "VARCHAR(25)")
+  private Long id;
+  @Column(name = "race", columnDefinition = "VARCHAR(100)")
   private String race;
   @Column(name = "height", columnDefinition = "DOUBLE")
-  private double height;
+  private Double height;
   @Column(name = "weight", columnDefinition = "DOUBLE")
-  private double weight;
-  @Column(name = "eyes", columnDefinition = "VARCHAR(25)")
+  private Double weight;
+  @Column(name = "eyes", columnDefinition = "VARCHAR(100)")
   private String eyes;
-  @Column(name = "hair", columnDefinition = "VARCHAR(25)")
+  @Column(name = "hair", columnDefinition = "VARCHAR(100)")
   private String hair;
 
 }

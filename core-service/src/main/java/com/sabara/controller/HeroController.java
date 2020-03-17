@@ -17,7 +17,7 @@ public class HeroController {
 
   private final HeroService service;
 
-  @GetMapping(value = "/{id}")
+  @GetMapping("/{id}")
   ResponseEntity<HeroResource> getHero(@PathVariable long id) {
     return ResponseEntity.ok(service.getHeroById(id));
   }

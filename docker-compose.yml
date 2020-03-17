@@ -5,7 +5,19 @@ services:
       restart: on-failure     
       ports: 
           - 8080:8080
-          
+
+    integration-service:
+      build: ./integration-service
+      restart: on-failure
+      ports:
+          - 8081:8081
+
+    simulation-service:
+      build: ./simulation-service
+      restart: on-failure
+      ports:
+        - 8082:8082
+
     hero-db:
         image: postgres:9.5
         restart: on-failure

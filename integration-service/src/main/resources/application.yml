@@ -1,0 +1,11 @@
+server:
+  port: 8081
+
+
+spring:
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: false
+
+api_key: 1092405501141478
+api_url: https://superheroapi.com/api/
