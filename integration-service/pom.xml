@@ -17,6 +17,8 @@
   <properties>
     <java.version>11</java.version>
     <openfeign.version>2.2.2.RELEASE</openfeign.version>
+    <eureka.version>2.2.2.RELEASE</eureka.version>
+    <config.version>2.2.2.RELEASE</config.version>
     <apache.commons.version>3.9</apache.commons.version>
     <lombok.version>1.18.12</lombok.version>
   </properties>
@@ -31,6 +33,18 @@
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-openfeign</artifactId>
       <version>${openfeign.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+      <version>${eureka.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-config-client</artifactId>
+      <version>${config.version}</version>
     </dependency>
 
     <dependency>

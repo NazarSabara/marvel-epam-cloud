@@ -25,28 +25,8 @@ public class HeroService {
                 .orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    public AppearanceResource getAppearance(Long id) {
-        return superHeroClient.getAppearance(id)
-                .map(APPEARANCE_MAPPER)
-                .orElseThrow(() -> new ResourceNotFoundException(id));
-    }
-
-    public PowerstatsResource getPowerstats(Long id){
-        return superHeroClient.getPowerstats(id)
-                .map(POWERSTATS_MAPPER)
-                .orElseThrow(() -> new ResourceNotFoundException(id));
-    }
-
     public List<HeroResource> getAllHeroes() {
         return superHeroClient.getAllHeroes()
-                .getHeroes()
-                .stream()
-                .map(HERO_MAPPER)
-                .collect(toList());
-    }
-
-    public List<HeroResource> searchByName(String name){
-        return superHeroClient.searchByName(name)
                 .getHeroes()
                 .stream()
                 .map(HERO_MAPPER)

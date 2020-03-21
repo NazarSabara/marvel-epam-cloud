@@ -11,6 +11,14 @@ spring:
   liquibase:
     change-log: classpath:/db/changelog/db.changelog.yml
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery-server:8761/eureka/
+
 event:
   listener:
     enabled: true
+
+server:
+  port: 8083

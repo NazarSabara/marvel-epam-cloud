@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.Set;
 
 @Data
 @Entity
@@ -32,5 +32,5 @@ public class Hero {
   @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER, targetEntity = Group.class)
   @JoinTable(name = "hero_group", joinColumns = @JoinColumn(name = "hero_id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
   @JsonIgnoreProperties("heroes")
-  private Set<Group> groups = new HashSet<>();
+  private Collection<Group> groups = new HashSet<>();
 }

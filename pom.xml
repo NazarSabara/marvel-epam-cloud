@@ -20,6 +20,9 @@
 		<module>core-service</module>
 		<module>integration-service</module>
 		<module>simulation-service</module>
+		<module>config-server</module>
+		<module>discovery-server</module>
+		<module>gateway-edge-server</module>
 	</modules>
 
 </project>
