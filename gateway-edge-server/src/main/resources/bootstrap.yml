@@ -1,6 +1,6 @@
 spring:
-  profiles:
-    active: native
+  application:
+    name: gateway-edge-server
 
   cloud:
     config:

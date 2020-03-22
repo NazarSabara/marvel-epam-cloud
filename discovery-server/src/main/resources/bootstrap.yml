@@ -1,6 +1,6 @@
 spring:
-  profiles:
-    active: native
+  application:
+    name: discovery-server
 
   cloud:
     config:
