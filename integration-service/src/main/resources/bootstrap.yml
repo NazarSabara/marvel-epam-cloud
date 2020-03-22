@@ -1,7 +1,4 @@
 spring:
-  application:
-    name: integration-service
-
   profiles:
     active: native
 

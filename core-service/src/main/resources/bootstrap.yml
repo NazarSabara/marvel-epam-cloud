@@ -1,7 +1,4 @@
 spring:
-  application:
-    name: core-service
-
   profiles:
     active: native
 
