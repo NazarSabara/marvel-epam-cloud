@@ -6,14 +6,15 @@ function HeroList(props) {
    const [selected, setSelected] = useState([]);
    const handleChange = (e, { value }) => {
     setSelected({value});
-    props.onChange(value)
+    props.onChange(value);
    }
 
   return (
-      <Dropdown className = 'ui fluid selection dropdown'
+      <Dropdown id ='dropDown' 
+        className = 'ui fluid selection dropdown'
         clearable
         onChange={handleChange}
-        multiple = {props.multiple}
+        multiple = {props.isTeamBattle}
         search
         options={props.heroes}
         placeholder='Select Hero'
