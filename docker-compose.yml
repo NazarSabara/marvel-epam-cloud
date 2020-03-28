@@ -3,8 +3,8 @@ services:
     core-service:
       build: ./core-service
       restart: on-failure     
-      ports: 
-          - 8080:8080
+      ports:
+          - 8083:8083
 
     integration-service:
       build: ./integration-service
@@ -17,6 +17,24 @@ services:
       restart: on-failure
       ports:
         - 8082:8082
+
+    discovery-server:
+      build: ./discovery-server
+      restart: on-failure
+      ports:
+        - 8761:8761
+
+    config-server:
+      build: ./config-server
+      restart: on-failure
+      ports:
+        - 8888:8888
+
+    gateway-edge-server:
+      build: ./gateway-edge-server
+      restart: on-failure
+      ports:
+        - 8060:8060
 
     hero-db:
         image: postgres:9.5

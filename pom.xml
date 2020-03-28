@@ -5,21 +5,88 @@
 	<groupId>com.sabara</groupId>
 	<artifactId>marvel-epam-cloud</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-openfeign-core</artifactId>
-            <version>2.2.2.RELEASE</version>
-            <scope>compile</scope>
-        </dependency>
-    </dependencies>
     <name>marvel-epam-cloud</name>
 	<packaging>pom</packaging>
+
+	<properties>
+		<java.version>11</java.version>
+		<spring-cloud.version>Hoxton.SR3</spring-cloud.version>
+		<spring-boot.version>2.2.5.RELEASE</spring-boot.version>
+		<postgre.version>42.2.10</postgre.version>
+		<lombok.version>1.18.12</lombok.version>
+		<liquibase.version>3.8.6</liquibase.version>
+		<apache-commons.version>3.9</apache-commons.version>
+		<model-mapper.version>2.3.5</model-mapper.version>
+
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 
 	<modules>
 		<module>core-service</module>
 		<module>integration-service</module>
 		<module>simulation-service</module>
+		<module>config-server</module>
+		<module>discovery-server</module>
+		<module>gateway-edge-server</module>
 	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-parent</artifactId>
+				<version>${spring-boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<parameters>true</parameters>
+					</configuration>
+					<version>3.8.1</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-jar-plugin</artifactId>
+					<configuration>
+						<archive>
+							<manifest>
+								<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							</manifest>
+						</archive>
+					</configuration>
+					<version>3.2.0</version>
+				</plugin>
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<executions>
+						<execution>
+							<id>repackage</id>
+							<goals>
+								<goal>repackage</goal>
+							</goals>
+						</execution>
+					</executions>
+					<version>2.2.5.RELEASE</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 
 </project>

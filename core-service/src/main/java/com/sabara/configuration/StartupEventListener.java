@@ -28,7 +28,7 @@ public class StartupEventListener {
     private final ModelMapper modelMapper;
 
     @EventListener(ApplicationStartedEvent.class)
-    public void handleContextRefreshEvent() {
+    public void onApplicationStart() {
         List<HeroResource> heroes = integrationServiceClient.getAllHeroes();
         heroes.stream().map(this::convertToEntity).forEach(heroService::addHero);
     }

@@ -3,8 +3,8 @@ package com.sabara.model.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.Set;
 
 @Data
 @Entity
@@ -18,5 +18,5 @@ public class Group {
   private String name;
 
   @ManyToMany(mappedBy = "groups")
-  private Set<Hero> heroes = new HashSet<>();
+  private Collection<Hero> heroes = new HashSet<>();
 }

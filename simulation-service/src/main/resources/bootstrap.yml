@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: simulation-service
+
+  cloud:
+    config:
+      fail-fast: true
+      uri: http://localhost:8888

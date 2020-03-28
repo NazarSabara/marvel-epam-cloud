@@ -14,34 +14,20 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@RequestMapping("/heroes")
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class HeroController {
 
   private final HeroService heroService;
 
-  @GetMapping("/{id:\\d+}")
+  @GetMapping("/{id}")
   public HeroResource getHeroById(@PathVariable long id){
     return heroService.getHeroById(id);
   }
 
-  @GetMapping("/{id:\\d+}/appearance")
-  public AppearanceResource getAppearance(@PathVariable long id){
-    return heroService.getAppearance(id);
-  }
-
-  @GetMapping("/{id:\\d+}/powerstats")
-  public PowerstatsResource getPowerstats(@PathVariable long id){
-    return heroService.getPowerstats(id);
-  }
-
-  @GetMapping("/all")
+  @GetMapping("/")
   public List<HeroResource> getAllHeroes() {
     return heroService.getAllHeroes();
-  }
-
-  @GetMapping("search/{name}")
-  public List<HeroResource> getAllHeroes(@PathVariable String name) {
-    return heroService.searchByName(name);
   }
 
 }
