@@ -13,3 +13,7 @@ spring:
 
 server:
   port: 8888
+
+management:
+  server:
+    port: 8898

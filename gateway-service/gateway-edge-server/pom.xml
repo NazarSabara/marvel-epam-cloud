@@ -9,13 +9,9 @@
 
 	<parent>
 		<groupId>com.sabara</groupId>
-		<artifactId>marvel-epam-cloud</artifactId>
+		<artifactId>gateway-service</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-
-	<properties>
-		<frontend-src-dir>${basedir}/src/main/resources/marvel-epam-cloud-ui</frontend-src-dir>
-	</properties>
 
 	<dependencies>
 		<dependency>
@@ -39,6 +35,11 @@
 		</dependency>
 	</dependencies>
 
+	<properties>
+		<resourse>src/main/resources/public</resourse>
+		<frontend-resource>../gateway-frontend/build</frontend-resource>
+	</properties>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -47,20 +48,20 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
-				<version>3.0.1</version>
+				<version>3.1.0</version>
 				<executions>
 					<execution>
-						<id>react-build</id>
+						<id>copy-resources</id>
+						<phase>install</phase>
 						<goals>
 							<goal>copy-resources</goal>
 						</goals>
-						<phase>prepare-package</phase>
 						<configuration>
-							<outputDirectory>${project.build.outputDirectory}/static</outputDirectory>
+							<outputDirectory>${basedir}/src/main/resources/public</outputDirectory>
 							<resources>
 								<resource>
-									<directory>${frontend-src-dir}/build</directory>
-									<filtering>false</filtering>
+									<directory>${frontend-resource}</directory>
+									<filtering>true</filtering>
 								</resource>
 							</resources>
 						</configuration>

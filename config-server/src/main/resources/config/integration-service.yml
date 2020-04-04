@@ -14,3 +14,7 @@ eureka:
 
 api_key: 1092405501141478
 api_url: https://superheroapi.com/api/
+
+management:
+  server:
+    port: 8091
