@@ -22,11 +22,6 @@ services:
       restart: on-failure
       ports:
         - 8888:8888
-      healthcheck:
-        test: "${DOCKER_HEALTHCHECK_TEST:-curl config-server:8898/actuator/health}"
-        interval: "10s"
-        timeout: "3s"
-        retries: 10
 
     discovery-server:
       build: ./discovery-server
@@ -36,11 +31,6 @@ services:
       depends_on:
         config-server:
           condition: service_healthy
-      healthcheck:
-        test: "${DOCKER_HEALTHCHECK_TEST:-curl discovery-server:8099/actuator/health}"
-        interval: "10s"
-        timeout: "3s"
-        retries: 10
 
     gateway-service:
       build: ./gateway-service
@@ -59,11 +49,6 @@ services:
       depends_on:
         discovery-server:
           condition: service_healthy
-      healthcheck:
-        test: "${DOCKER_HEALTHCHECK_TEST:-curl integration-service:8091/actuator/health}"
-        interval: "10s"
-        timeout: "3s"
-        retries: 10
 
     core-service:
       build: ./core-service
