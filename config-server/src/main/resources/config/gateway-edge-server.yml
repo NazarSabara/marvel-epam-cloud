@@ -8,6 +8,7 @@ zuul:
   routes:
     super-heroes:
       url: http://core-service:8083/super-heroes/
+      sensitive-headers: Cookie,Set-Cookie
 
 server:
   port: 8060

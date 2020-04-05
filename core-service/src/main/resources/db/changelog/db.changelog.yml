@@ -22,7 +22,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                   name: password
-                  type: VARCHAR(25)
+                  type: VARCHAR(100)
               - column:
                   constraints:
                     nullable: false
