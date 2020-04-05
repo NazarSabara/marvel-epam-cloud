@@ -52,7 +52,7 @@
 				<executions>
 					<execution>
 						<id>copy-resources</id>
-						<phase>install</phase>
+						<phase>generate-resources</phase>
 						<goals>
 							<goal>copy-resources</goal>
 						</goals>
