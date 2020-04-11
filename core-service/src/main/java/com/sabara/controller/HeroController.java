@@ -5,10 +5,9 @@ import com.sabara.service.HeroService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/super-heroes")
@@ -21,5 +20,11 @@ public class HeroController {
   ResponseEntity<HeroResource> getHero(@PathVariable long id) {
     return ResponseEntity.ok(service.getHeroById(id));
   }
+
+  @PutMapping("/sync")
+  void updateHeroes(@RequestBody List<HeroResource> heroesToUpdate){
+    service.updateHeroes(heroesToUpdate);
+  }
+
 }
 

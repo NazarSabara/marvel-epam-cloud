@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 import java.util.Optional;
 
-@FeignClient(name = "integration-service", url = "integration-service:8081", fallbackFactory = IntegrationServiceFallbackFactory.class )
+@FeignClient(name = "integration-service", url = "localhost:8081", fallbackFactory = IntegrationServiceFallbackFactory.class )
 @RequestMapping("/heroes")
 public interface IntegrationServiceClient {
 

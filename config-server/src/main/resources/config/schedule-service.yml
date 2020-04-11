@@ -1,0 +1,16 @@
+server:
+  port: 8085
+
+
+spring:
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: false
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery-server:8761/eureka/
+
+api_key: 1092405501141478
+api_url: https://superheroapi.com/api/
