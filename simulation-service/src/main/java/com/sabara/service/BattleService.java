@@ -7,12 +7,14 @@ import com.sabara.model.resource.BattleType;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 import static com.sabara.utils.BattleUtils.*;
 import static java.lang.String.format;
 import static java.util.Comparator.comparingInt;
+import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toList;
+import static java.util.Objects.isNull;
 
 @Service
 public class BattleService {
@@ -27,66 +29,57 @@ public class BattleService {
         secondTeam.sort(comparingInt(h -> h.getPowerstats().getSpeed()));
         int firstTeamIndex = 0;
         int secondTeamIndex = 0;
-        boolean currentFirstTeam = firstTeam.get(firstTeamIndex).getPowerstats().getSpeed() > secondTeam.get(secondTeamIndex).getPowerstats().getSpeed();
 
-        HeroDTO currentHero;
-        HeroDTO currentOpponent;
+        HeroDTO currentHero = getFirstHero(firstTeam, secondTeam);
 
-        while (true){
-            currentHero = currentFirstTeam ? firstTeam.get(firstTeamIndex++) : secondTeam.get(secondTeamIndex++);
-            currentOpponent = getRandomOpponent(firstTeam, secondTeam, currentFirstTeam);
+        do{
+            performAttack(firstTeam, secondTeam, currentHero, map);
 
-            boolean currentIsStrBasedHero =
-                    currentHero.getPowerstats().getStrength() > currentHero.getPowerstats().getIntelligence();
-            boolean currentIsInhabitant =map.getInhabitants().contains(currentHero.getAppearance().getRace());
-            boolean opponentIsStrBasedHero =
-                    currentHero.getPowerstats().getStrength() > currentHero.getPowerstats().getIntelligence();
-
-            double pDmg = physDmg(currentHero.getPowerstats().getStrength(),
-                            currentHero.getPowerstats().getPower(),
-                            currentIsStrBasedHero);
-            double mDmg = magDmg(currentHero.getPowerstats().getIntelligence(),
-                            currentHero.getPowerstats().getPower(),
-                            currentIsStrBasedHero);
-            double comboDmg = comboDmg(pDmg, mDmg, currentIsInhabitant, map);
-            double dmgReduction = dmgReduction(currentOpponent.getPowerstats().getStrength(),
-                    currentOpponent.getPowerstats().getIntelligence(),
-                    currentOpponent.getPowerstats().getCombat(),
-                    opponentIsStrBasedHero, map);
-
-            currentOpponent.getPowerstats().setDurability(currentOpponent.getPowerstats().getDurability()
-                    - (int)(receivedDmg(comboDmg, dmgReduction, isCrit(currentHero.getPowerstats().getPower()),
-                    isBlocked(currentOpponent.getPowerstats().getPower()))));
-
-            if(currentOpponent.getPowerstats().getDurability() <= 0){
-                getOpponentTeam(firstTeam, secondTeam, currentFirstTeam).remove(currentOpponent);
-
-                if(getOpponentTeam(firstTeam, secondTeam, currentFirstTeam).isEmpty()){
-                    results.setWinner(results.getBattleType().getWinnerPrefix() + (currentFirstTeam ? " 1" : " 2"));
-                    results.setSurvivors(getOpponentTeam(firstTeam, secondTeam, !currentFirstTeam)
-                            .stream()
-                            .map(hero -> format("%s with %d hp", hero.getName(), hero.getPowerstats().getDurability()))
-                            .collect(toList()));
-                    results.setBattleDuration(currentTurn);
-                    results.setMap(map);
-
-                    return results;
-                }
-            }
-
-            currentFirstTeam = !currentFirstTeam;
             firstTeamIndex = firstTeamIndex % firstTeam.size();
             secondTeamIndex = secondTeamIndex % secondTeam.size();
             currentTurn++;
-        }
+
+            currentHero = firstTeam.contains(currentHero) ? secondTeam.get(secondTeamIndex++) : firstTeam.get(firstTeamIndex++);
+        } while (isNull(getWinner(firstTeam, secondTeam)));
+
+        results.setWinner(results.getBattleType().getWinnerPrefix() + getWinner(firstTeam, secondTeam));
+        results.setSurvivors(requireNonNull(getWinner(firstTeam, secondTeam))
+                .stream()
+                .map(hero -> format(WINNER_PATTERN, hero.getName(), hero.getPowerstats().getDurability()))
+                .collect(toList()));
+        results.setBattleDuration(currentTurn);
+        results.setMap(map);
+
+        return results;
     }
 
-    private HeroDTO getRandomOpponent(List<HeroDTO> firstTeam, List<HeroDTO> secondTeam, boolean currentFirstTeam){
-        return currentFirstTeam ? secondTeam.get(getRandomIndex(secondTeam.size()))
+    private HeroDTO getRandomOpponentForHero(List<HeroDTO> firstTeam, List<HeroDTO> secondTeam, HeroDTO currentHero){
+        return firstTeam.contains(currentHero) ? secondTeam.get(getRandomIndex(secondTeam.size()))
                 : firstTeam.get(getRandomIndex(firstTeam.size()));
     }
 
-    private List<HeroDTO> getOpponentTeam(List<HeroDTO> firstTeam, List<HeroDTO> secondTeam, boolean currentFirstTeam){
-        return currentFirstTeam ? secondTeam : firstTeam;
+    // heroIsOpponent means that hero passed to this function counted as opponent
+    private List<HeroDTO> getTeamByHero(List<HeroDTO> firstTeam, List<HeroDTO> secondTeam, HeroDTO hero){
+        return firstTeam.contains(hero) ? secondTeam : firstTeam;
+    }
+
+    private List<HeroDTO> getWinner(List<HeroDTO> firstTeam, List<HeroDTO> secondTeam){
+        return firstTeam.isEmpty() ? secondTeam : secondTeam.isEmpty() ? firstTeam : null;
+    }
+
+    private HeroDTO getFirstHero(List<HeroDTO> firstTeam, List<HeroDTO> secondTeam){
+        return firstTeam.get(0).getPowerstats().getSpeed() > secondTeam.get(0).getPowerstats().getSpeed()
+                ? firstTeam.get(0) : secondTeam.get(0);
+    }
+
+    private void performAttack(List<HeroDTO> firstTeam, List<HeroDTO> secondTeam, HeroDTO currentHero, BattleMap map){
+        HeroDTO opponent = getRandomOpponentForHero(firstTeam, secondTeam, currentHero);
+
+        opponent.getPowerstats().setDurability(opponent.getPowerstats().getDurability()
+                - (receivedDmg(currentHero.getPowerstats(), currentHero.getAppearance().getRace(), opponent.getPowerstats(), map)));
+
+        if(opponent.getPowerstats().getDurability() <= 0){
+            getTeamByHero(firstTeam, secondTeam, opponent).remove(opponent);
+        }
     }
 }
