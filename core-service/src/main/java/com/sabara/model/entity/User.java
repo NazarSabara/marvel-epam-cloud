@@ -19,7 +19,7 @@ public class User {
   private Long id;
   @Column(name = "username", columnDefinition = "VARCHAR(25)", nullable = false)
   private String username;
-  @Column(name = "password", columnDefinition = "VARCHAR(25)", nullable = false)
+  @Column(name = "password", columnDefinition = "VARCHAR(100)", nullable = false)
   private String password;
   @Column(name = "email", columnDefinition = "VARCHAR(25)", nullable = false)
   private String email;

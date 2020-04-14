@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>gateway-service</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>gateway-service</name>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>com.sabara</groupId>
+		<artifactId>marvel-epam-cloud</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<modules>
+		<module>gateway-frontend</module>
+		<module>gateway-edge-server</module>
+	</modules>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+	</build>
+
+</project>

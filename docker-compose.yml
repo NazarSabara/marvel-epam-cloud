@@ -1,28 +1,21 @@
 version: '2.1'
 services:
-    core-service:
-      build: ./core-service
-      restart: on-failure     
-      ports:
-          - 8083:8083
-
-    integration-service:
-      build: ./integration-service
+    hero-db:
+      image: postgres:9.5
       restart: on-failure
+      environment:
+        - POSTGRES_PASSWORD=postgres
+        - POSTGRES_USER=postgres
+        - POSTGRES_DB=hero
       ports:
-          - 8081:8081
-
-    simulation-service:
-      build: ./simulation-service
-      restart: on-failure
-      ports:
-        - 8082:8082
-
-    discovery-server:
-      build: ./discovery-server
-      restart: on-failure
-      ports:
-        - 8761:8761
+        - 5432:5432
+      volumes:
+        - db-data:/var/lib/postgres
+      healthcheck:
+        test: ["CMD-SHELL", "pg_isready -h hero-db -p 5432 -d hero -U postgres"]
+        interval: 10s
+        timeout: 5s
+        retries: 5
 
     config-server:
       build: ./config-server
@@ -30,23 +23,43 @@ services:
       ports:
         - 8888:8888
 
-    gateway-edge-server:
-      build: ./gateway-edge-server
+    discovery-server:
+      build: ./discovery-server
+      restart: on-failure
+      ports:
+        - 8761:8761
+      depends_on:
+        config-server:
+          condition: service_healthy
+
+    gateway-service:
+      build: ./gateway-service
       restart: on-failure
       ports:
         - 8060:8060
+      depends_on:
+        discovery-server:
+          condition: service_healthy
 
-    hero-db:
-        image: postgres:9.5
-        restart: on-failure
-        environment:
-            - POSTGRES_PASSWORD=postgres
-            - POSTGRES_USER=postgres
-            - POSTGRES_DB=hero
-        ports:
-            - 5432:5432
-        volumes:
-            - db-data:/var/lib/postgres
+    integration-service:
+      build: ./integration-service
+      restart: on-failure
+      ports:
+        - 8081:8081
+      depends_on:
+        discovery-server:
+          condition: service_healthy
+
+    core-service:
+      build: ./core-service
+      restart: on-failure
+      ports:
+        - 8083:8083
+      depends_on:
+        integration-service:
+          condition: service_healthy
+        hero-db:
+          condition: service_healthy
 
 volumes:
   db-data:

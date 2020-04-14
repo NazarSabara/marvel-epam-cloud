@@ -6,12 +6,13 @@ import com.sabara.model.entity.Hero;
 import com.sabara.model.resource.AppearanceResource;
 import com.sabara.model.resource.HeroResource;
 import com.sabara.repository.HeroRepository;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import static java.util.stream.Collectors.toSet;
 
 @Service
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
@@ -33,7 +34,7 @@ public class HeroService {
             .eyes(hero.getAppearance().getEyes())
             .hair(hero.getAppearance().getHair())
             .build())
-        .groups(hero.getGroups().stream().map(Group::getName).collect(Collectors.toSet()))
+        .groups(hero.getGroups().stream().map(Group::getName).collect(toSet()))
         .build()).orElseThrow(() -> new ResourceNotFoundException(id));
   }
 
