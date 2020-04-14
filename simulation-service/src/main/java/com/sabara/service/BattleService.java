@@ -4,6 +4,7 @@ import com.sabara.dto.HeroDTO;
 import com.sabara.model.resource.BattleMap;
 import com.sabara.model.resource.BattleResults;
 import com.sabara.model.resource.BattleType;
+import org.apache.commons.lang.time.StopWatch;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class BattleService {
         BattleResults results = new BattleResults();
         results.setBattleType(firstTeam.size() == 1 ? BattleType.PVP : BattleType.TVT);
 
-        int currentTurn = 1;
+        StopWatch executionTime = new StopWatch();
 
         firstTeam.sort(comparingInt(h -> h.getPowerstats().getSpeed()));
         secondTeam.sort(comparingInt(h -> h.getPowerstats().getSpeed()));
@@ -32,22 +33,24 @@ public class BattleService {
 
         HeroDTO currentHero = getFirstHero(firstTeam, secondTeam);
 
+        executionTime.start();
         do{
             performAttack(firstTeam, secondTeam, currentHero, map);
 
             firstTeamIndex = firstTeamIndex % firstTeam.size();
             secondTeamIndex = secondTeamIndex % secondTeam.size();
-            currentTurn++;
 
             currentHero = firstTeam.contains(currentHero) ? secondTeam.get(secondTeamIndex++) : firstTeam.get(firstTeamIndex++);
         } while (isNull(getWinner(firstTeam, secondTeam)));
+
+        executionTime.stop();
 
         results.setWinner(results.getBattleType().getWinnerPrefix() + getWinner(firstTeam, secondTeam));
         results.setSurvivors(requireNonNull(getWinner(firstTeam, secondTeam))
                 .stream()
                 .map(hero -> format(WINNER_PATTERN, hero.getName(), hero.getPowerstats().getDurability()))
                 .collect(toList()));
-        results.setBattleDuration(currentTurn);
+        results.setBattleDuration(calculateBattleDuration(executionTime.getTime()));
         results.setMap(map);
 
         return results;

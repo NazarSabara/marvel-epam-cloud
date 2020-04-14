@@ -15,6 +15,7 @@ public class BattleUtils {
     public static final double CRITICAL_DMG_MULTIPLIER = 1.5;
     public static final double CRITICAL_DMG_DIVIDER = 100;
     public static final double BLOCK_DIVIDER = 120;
+    public static final int DURATION_COEFFICIENT = 1000;
 
     private static final Random random = new Random();
 
@@ -59,5 +60,9 @@ public class BattleUtils {
 
     public static int getRandomIndex(int bound){
         return random.nextInt(bound);
+    }
+
+    public static long calculateBattleDuration(long executionTime){
+        return executionTime / DURATION_COEFFICIENT;
     }
 }
