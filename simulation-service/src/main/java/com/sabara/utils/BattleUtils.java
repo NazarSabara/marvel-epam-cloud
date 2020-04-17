@@ -89,8 +89,4 @@ public class BattleUtils {
     public static boolean isDefeated(HeroDTO opponent){
         return opponent.getPowerstats().getDurability() <= 0;
     }
-
-    public static int opponentTeamIndex(int currentTeamIndex){
-        return ++currentTeamIndex % 2;
-    }
 }
