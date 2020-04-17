@@ -21,8 +21,8 @@ public class BattleController {
 
     private final BattleService battleService;
 
-    @PostMapping("/")
+    @PostMapping("/start")
     public BattleResults battle(@RequestBody BattleDTO battle){
-        return battleService.battle(battle.getFirstTeam(), battle.getSecondTeam(), battle.getMap());
+        return battleService.battle(battle);
     }
 }
