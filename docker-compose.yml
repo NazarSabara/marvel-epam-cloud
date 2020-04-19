@@ -50,6 +50,15 @@ services:
         discovery-server:
           condition: service_healthy
 
+    simulation-service:
+      build: ./simulation-service
+      restart: on-failure
+      ports:
+        - 8082:8082
+      depends_on:
+        discovery-server:
+          condition: service_healthy
+
     core-service:
       build: ./core-service
       restart: on-failure

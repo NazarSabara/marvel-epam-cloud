@@ -3,5 +3,7 @@ eureka:
     serviceUrl:
       defaultZone: http://discovery-server:8761/eureka/
 
+ui_origin: http://localhost:8060
+
 server:
   port: 8082

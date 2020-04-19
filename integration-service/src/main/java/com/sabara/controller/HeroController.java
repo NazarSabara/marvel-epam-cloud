@@ -6,10 +6,7 @@ import com.sabara.model.resource.PowerstatsResource;
 import com.sabara.service.HeroService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,6 +22,7 @@ public class HeroController {
     return heroService.getHeroById(id);
   }
 
+  @CrossOrigin(origins = "${ui_origin}")
   @GetMapping("/")
   public List<HeroResource> getAllHeroes() {
     return heroService.getAllHeroes();

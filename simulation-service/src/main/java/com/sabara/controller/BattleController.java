@@ -7,10 +7,7 @@ import com.sabara.model.resource.BattleResults;
 import com.sabara.service.BattleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,6 +18,7 @@ public class BattleController {
 
     private final BattleService battleService;
 
+    @CrossOrigin(origins = "${ui_origin}")
     @PostMapping("/start")
     public BattleResults battle(@RequestBody BattleDTO battle){
         return battleService.battle(battle);
