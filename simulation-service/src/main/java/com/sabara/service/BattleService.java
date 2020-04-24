@@ -5,11 +5,14 @@ import com.sabara.dto.HeroDTO;
 import com.sabara.exception.UnprocessableEntityException;
 import com.sabara.model.resource.BattleMap;
 import com.sabara.model.resource.BattleResults;
-import javafx.util.Pair;
 import org.apache.commons.lang.time.StopWatch;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 import static com.sabara.utils.BattleUtils.*;
@@ -35,7 +38,7 @@ public class BattleService {
         LinkedList<Pair<Boolean, HeroDTO>> heroes = Stream.of(battle.getFirstTeam(), battle.getSecondTeam())
             .flatMap(Collection::stream)
             .sorted(HERO_COMPARATOR)
-            .map(hero -> new Pair<>(battle.getFirstTeam().contains(hero), hero))
+            .map(hero ->Pair.of(battle.getFirstTeam().contains(hero), hero))
             .collect(toCollection(LinkedList::new));
 
         StopWatch executionTime = new StopWatch();
