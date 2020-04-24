@@ -18,7 +18,6 @@ public class BattleController {
 
     private final BattleService battleService;
 
-    @CrossOrigin(origins = "${ui_origin}")
     @PostMapping("/start")
     public BattleResults battle(@RequestBody BattleDTO battle){
         return battleService.battle(battle);

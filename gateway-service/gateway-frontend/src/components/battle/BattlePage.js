@@ -62,19 +62,13 @@ function BattlePage() {
             </Form>
             <Button type="button" primary label="Battle" size="medium" margin="small"
              onClick={() => {
-                var heroes;
-                if(battleType == battleTypeOptions[1]){
-                    heroes = firstTeam.concat(secondTeam);
-                } else {
-                    heroes = [firstTeam, secondTeam];
-                }
-
                 fetch(startBattleUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(
                         {
-                            heroes: heroes,
+                            firstTeam,
+                            secondTeam,
                             battleType,
                             map})
                 }).then(res => res.json())

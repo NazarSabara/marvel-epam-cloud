@@ -5,21 +5,23 @@ import com.sabara.dto.HeroDTO;
 import com.sabara.exception.UnprocessableEntityException;
 import com.sabara.model.resource.BattleMap;
 import com.sabara.model.resource.BattleResults;
-import com.sabara.model.resource.BattleType;
-import com.sabara.utils.BattleUtils;
+import javafx.util.Pair;
 import org.apache.commons.lang.time.StopWatch;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Stream;
 
 import static com.sabara.utils.BattleUtils.*;
+import static com.sabara.utils.CalculationsUtils.calculateReceivedDmg;
+import static com.sabara.utils.HeroUtils.HERO_COMPARATOR;
+import static com.sabara.utils.HeroUtils.isDefeated;
 import static java.lang.String.format;
 import static java.util.Collections.rotate;
-import static java.util.Objects.isNull;
 import static java.util.Objects.requireNonNull;
+import static java.util.stream.Collectors.toCollection;
 import static java.util.stream.Collectors.toList;
-import static org.apache.commons.collections4.ListUtils.partition;
+import static org.apache.commons.lang.BooleanUtils.toInteger;
 
 @Service
 public class BattleService {
@@ -30,35 +32,31 @@ public class BattleService {
         BattleResults results = new BattleResults();
         results.setBattleType(battle.getBattleType());
 
-        LinkedList<HeroDTO> currentTeam = new LinkedList<>();
-        LinkedList<HeroDTO> opponentTeam = new LinkedList<>();
-        splitHeroesIntoTeams(battle, currentTeam, opponentTeam);
-        if(opponentTeam.contains(getFastestHero(battle.getHeroes()))){
-            swapTeams(currentTeam, opponentTeam);
-        }
+        LinkedList<Pair<Boolean, HeroDTO>> heroes = Stream.of(battle.getFirstTeam(), battle.getSecondTeam())
+            .flatMap(Collection::stream)
+            .sorted(HERO_COMPARATOR)
+            .map(hero -> new Pair<>(battle.getFirstTeam().contains(hero), hero))
+            .collect(toCollection(LinkedList::new));
 
         StopWatch executionTime = new StopWatch();
-
-        currentTeam.sort(HERO_COMPARATOR);
-        opponentTeam.sort(HERO_COMPARATOR);
-
         executionTime.start();
-        do{
-            performAttack(currentTeam.getFirst(), getRandomOpponent(opponentTeam), battle.getMap());
-            opponentTeam.removeIf(BattleUtils::isDefeated);
 
-            if(currentTeam.size() > 1) {
-                rotate(currentTeam, -1);
-            }
-            swapTeams(currentTeam, opponentTeam);
-        } while (isNull(getWinner(currentTeam, opponentTeam)));
+        Stream.generate(heroes::getFirst)
+            .takeWhile(hero ->
+                hero.getKey() ? teamIsDefeated(battle.getSecondTeam()) : teamIsDefeated(battle.getFirstTeam()))
+            .forEach(hero -> {
+                performAttack(hero.getValue(), getRandomOpponent(heroes), battle.getMap());
+                heroes.removeIf(opponent -> isDefeated(opponent.getValue()));
+
+                rotate(heroes, ROTATION_DISTANCE);
+            });
 
         executionTime.stop();
 
-        results.setWinner(results.getBattleType().getWinnerPrefix() + getWinner(currentTeam, opponentTeam));
-        results.setSurvivors(requireNonNull(getWinner(currentTeam, opponentTeam))
+        results.setWinner(results.getBattleType().getWinnerPrefix() + getWinnerIndex(heroes.getFirst().getKey()));
+        results.setSurvivors(requireNonNull(heroes)
                 .stream()
-                .map(hero -> format(WINNER_PATTERN, hero.getName(), hero.getPowerstats().getDurability()))
+                .map(hero -> format(WINNER_PATTERN, hero.getValue().getName(), hero.getValue().getPowerstats().getDurability()))
                 .collect(toList()));
         results.setBattleDuration(calculateBattleDuration(executionTime.getTime()));
         results.setMap(battle.getMap());
@@ -67,44 +65,36 @@ public class BattleService {
     }
 
     private void validate(BattleDTO battle){
-        if(battle.getBattleType().equals(BattleType.TVT) && battle.getHeroes().size() != TVT_BATTLE_TEAM_SIZE * 2){
+        if(battle.getFirstTeam().isEmpty() || battle.getSecondTeam().isEmpty()){
             throw new UnprocessableEntityException(TEAM_SIZE_ERROR);
         }
-
-        if(battle.getBattleType().equals(BattleType.PVP) && battle.getHeroes().size() != 2){
-            throw new UnprocessableEntityException(PLAYER_NOT_SELECTED_ERROR);
-        }
     }
 
-    private HeroDTO getFastestHero(List<HeroDTO> heroes){
-        return heroes.stream().min(HERO_COMPARATOR).orElseThrow(() -> new UnprocessableEntityException(TEAM_SIZE_ERROR));
+    private HeroDTO getRandomOpponent(LinkedList<Pair<Boolean, HeroDTO>> heroes){
+        boolean currentTeam = heroes.getFirst().getKey();
+        return heroes.stream()
+                .skip(1)
+                .filter(value -> value.getKey() != currentTeam)
+                .findAny()
+                .map(Pair::getValue)
+                .orElse(null);
     }
 
-    private HeroDTO getRandomOpponent(List<HeroDTO> opponentTeam){
-        return opponentTeam.get(getRandomIndex(opponentTeam.size()));
+    private int getWinnerIndex(boolean currentTeam){
+        return toInteger(currentTeam) + 1;
     }
 
-    private List<HeroDTO> getWinner(List<HeroDTO> firstTeam, List<HeroDTO> secondTeam){
-        return firstTeam.isEmpty() ? secondTeam : secondTeam.isEmpty() ? firstTeam : null;
+    private boolean teamIsDefeated(List<HeroDTO> team){
+        return team.stream().anyMatch(hero -> hero.getPowerstats().getDurability() > 0);
     }
 
     private void performAttack(HeroDTO currentHero, HeroDTO opponent, BattleMap map){
-        opponent.getPowerstats().setDurability(opponent.getPowerstats().getDurability()
-                - (receivedDmg(currentHero.getPowerstats(), currentHero.getAppearance().getRace(), opponent.getPowerstats(), map)));
-    }
+        if(Objects.isNull(opponent)){
+            return;
+        }
 
-    private void splitHeroesIntoTeams(BattleDTO battle, List<HeroDTO> firstTeam, List<HeroDTO> secondTeam){
-        int size = battle.getBattleType().equals(BattleType.PVP) ? 1 : TVT_BATTLE_TEAM_SIZE;
-
-        firstTeam.addAll(partition(battle.getHeroes(), size).get(0));
-        secondTeam.addAll(partition(battle.getHeroes(), size).get(1));
-    }
-
-    private void swapTeams(List<HeroDTO> currentTeam, List<HeroDTO> opponent){
-        List<HeroDTO> tmp = new LinkedList<>(opponent);
-        opponent.clear();
-        opponent.addAll(currentTeam);
-        currentTeam.clear();
-        currentTeam.addAll(tmp);
+        var opponentPowerStats = opponent.getPowerstats();
+        var receivedDmg = calculateReceivedDmg(currentHero.getPowerstats(), currentHero.getAppearance().getRace(), opponentPowerStats, map);
+        opponentPowerStats.setDurability(opponentPowerStats.getDurability() - receivedDmg);
     }
 }
