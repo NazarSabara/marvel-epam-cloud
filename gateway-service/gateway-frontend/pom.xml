@@ -28,7 +28,6 @@
 						<goals>
 							<goal>install-node-and-npm</goal>
 						</goals>
-						<phase>install</phase>
 						<configuration>
 							<nodeVersion>v12.12.0</nodeVersion>
 						</configuration>
@@ -39,7 +38,7 @@
 						<goals>
 							<goal>npm</goal>
 						</goals>
-						<phase>install</phase>
+						<phase>generate-resources</phase>
 						<configuration>
 							<arguments>install</arguments>
 						</configuration>
@@ -50,7 +49,6 @@
 						<goals>
 							<goal>npm</goal>
 						</goals>
-						<phase>install</phase>
 						<configuration>
 							<arguments>run build</arguments>
 						</configuration>
