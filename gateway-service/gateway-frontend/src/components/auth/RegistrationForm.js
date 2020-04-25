@@ -10,7 +10,6 @@ function RegistrationForm() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [email, setEmail] = useState('');
-    const [isCreated, setCreated] = useState(false);
 
     const history = useHistory();
 
@@ -34,7 +33,6 @@ function RegistrationForm() {
             })
             .then(res => {
                 if(res.status === 500){
-                    setCreated(false);
                     throw new Error(res.status)
                 }
                 history.push("/");
