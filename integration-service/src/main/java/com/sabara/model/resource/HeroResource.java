@@ -14,6 +14,7 @@ public class HeroResource {
   private String work;
   private String photo;
   private AppearanceResource appearance;
+  private PowerstatsResource powerstats;
   private Set<String> groups;
 
 }

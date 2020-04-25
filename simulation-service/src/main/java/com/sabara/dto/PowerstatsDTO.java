@@ -1,15 +1,21 @@
 
 package com.sabara.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class PowerstatsDTO {
 
-    private long combat;
-    private long durability;
-    private long intelligence;
-    private long power;
-    private long speed;
-    private long strength;
+    private int combat;
+    private int durability;
+    private int intelligence;
+    private int power;
+    private int speed;
+    private int strength;
 }

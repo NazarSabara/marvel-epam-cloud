@@ -12,8 +12,11 @@ import java.util.function.Function;
 
 import static com.sabara.utils.ConversionUtils.parseHeight;
 import static com.sabara.utils.ConversionUtils.parseWeight;
+import static java.lang.Integer.parseInt;
 
 public class MappingUtils {
+
+    private static int DEFAULT_POWERSTAT_VALUE = 10;
 
     public static final Function<AppearanceDTO, AppearanceResource> APPEARANCE_MAPPER =
             appearance ->
@@ -24,6 +27,16 @@ public class MappingUtils {
                             .eyes(appearance.getEyeColor())
                             .hair(appearance.getHairColor())
                             .build();
+    public static final Function<PowerstatsDTO, PowerstatsResource> POWERSTATS_MAPPER =
+            powerstats ->
+                    PowerstatsResource.builder()
+                        .combat(mapPowerStat(powerstats.getCombat()))
+                        .intelligence(mapPowerStat(powerstats.getIntelligence()))
+                        .durability(mapPowerStat(powerstats.getDurability()))
+                        .power(mapPowerStat(powerstats.getPower()))
+                        .strength(mapPowerStat(powerstats.getStrength()))
+                        .speed(mapPowerStat(powerstats.getSpeed()))
+                        .build();
     public static final Function<HeroDTO, HeroResource> HERO_MAPPER =
             hero ->
                     HeroResource.builder()
@@ -33,17 +46,15 @@ public class MappingUtils {
                             .work(hero.getWork().getOccupation())
                             .photo(hero.getImage().getUrl())
                             .appearance(APPEARANCE_MAPPER.apply(hero.getAppearance()))
+                            .powerstats(POWERSTATS_MAPPER.apply(hero.getPowerstats()))
                             .groups(Set.of(hero.getConnections().getGroupAffiliation().split("; ")))
                             .build();
-    public static final Function<PowerstatsDTO, PowerstatsResource> POWERSTATS_MAPPER =
-            powerstats ->
-                    PowerstatsResource.builder()
-                            .combat(Integer.valueOf(powerstats.getCombat()))
-                            .intelligence(Integer.valueOf(powerstats.getIntelligence()))
-                            .durability(Integer.valueOf(powerstats.getDurability()))
-                            .power(Integer.valueOf(powerstats.getPower()))
-                            .strength(Integer.valueOf(powerstats.getStrength()))
-                            .speed(Integer.valueOf(powerstats.getSpeed()))
-                            .build();
 
+    private static int mapPowerStat(String value){
+        try{
+            return parseInt(value);
+        } catch (NumberFormatException nfe){
+            return DEFAULT_POWERSTAT_VALUE;
+        }
+    }
 }

@@ -1,27 +1,51 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import HeroList from './HeroList/HeroList';
+import BattleResults from './BattleResults';
+import {getHeroesUrl, startBattleUrl} from './BattleConstants';
 import {Form, RadioButtonGroup, Button} from 'grommet';
 import './BattlePage.scss';
 
 function BattlePage() {
 
-    // TODO: replace with BE call
-    const heroes = [
-        { value: 'Batman', text: 'Batman' },
-        { value: 'Spiderman', text: 'Spiderman' }
-    ];
+    const map = {
+        name : 'ff',
+        gravitation : 0.25,
+        oxygenLevel : 0.25,
+        inhabitants : ['Human'],
+        naturalCondition : 0.25
+    }
 
-    const battleTypeOptions = ['1 vs 1', '3 vs 3']
-    const [battleType, setBattleType] = useState('1 vs 1');
-    const [selectedFirst, setSelectedFirst] = useState([]);
-    const [selectedSecond, setSelectedSecond] = useState([]);
+    const [heroes, setHeroes] = useState([]);
+    useEffect(() => {
+        fetch(getHeroesUrl)
+            .then(res => res.json())
+            .then(json => setHeroes(json));
+    }, []);
+
+    const [resultsPopup, showPopup] = useState(false);
+    const togglePopup = () => {
+        showPopup(!resultsPopup);
+    }
+
+    const [results, setResults] = useState({});
+
+    const battleTypeOptions = ['PVP', 'TVT']
+    const [battleType, setBattleType] = useState('PVP');
+    const [firstTeam, setFirstTeam] = useState([]);
+    const [secondTeam, setSecondTeam] = useState([]);
 
     const handleChangeFirst = (value) => {
-        setSelectedFirst(value);
-    
+        setFirstTeam(value);
     }
     const handleChangeSecond = (value) => {
-        setSelectedSecond(value);
+        setSecondTeam(value);
+    }
+
+    class DropDownItem {
+      constructor(text, hero) {
+        this.value = hero;
+        this.text = text;
+      }
     }
 
     return (
@@ -33,10 +57,30 @@ function BattlePage() {
                 onChange={(event) => setBattleType(event.target.value)}
             />
             <Form class='listForm'>
-                <HeroList isTeamBattle={battleType == battleTypeOptions[1]} heroes={heroes.filter(hero => !selectedSecond.includes(hero.value))} onChange={handleChangeFirst}></HeroList>
-                <HeroList isTeamBattle={battleType == battleTypeOptions[1]} heroes={heroes.filter(hero => !selectedFirst.includes(hero.value))} onChange={handleChangeSecond}></HeroList>
+                <HeroList isTeamBattle={battleType == battleTypeOptions[1]} heroes = {heroes.map( (hero) => new DropDownItem(hero.name, hero))} onChange={handleChangeFirst}></HeroList>
+                <HeroList isTeamBattle={battleType == battleTypeOptions[1]} heroes = {heroes.map( (hero) => new DropDownItem(hero.name, hero))} onChange={handleChangeSecond}></HeroList>
             </Form>
-            <Button type="button" primary label="Battle" size="medium" margin="small"/>
+            <Button type="button" primary label="Battle" size="medium" margin="small"
+             onClick={() => {
+                fetch(startBattleUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(
+                        {
+                            firstTeam,
+                            secondTeam,
+                            battleType,
+                            map})
+                }).then(res => res.json())
+                .then(json => setResults(json))
+
+                togglePopup();}
+                } />
+                {
+                    resultsPopup
+                      ? <BattleResults survivors={results.survivors} closePopup={togglePopup} />
+                      : null
+                }
         </Form>
     );
 }

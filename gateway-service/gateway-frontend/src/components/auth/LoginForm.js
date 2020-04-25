@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Button, TextInput, Heading, Anchor} from 'grommet';
+import {Redirect} from 'react-router-dom';
 import './Auth.scss';
 
 function LoginForm() {
