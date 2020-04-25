@@ -18,7 +18,9 @@ eureka:
 
 event:
   listener:
-    enabled: true
+    enabled: false
+
+ui_origin: http://localhost:3000
 
 server:
   port: 8083
