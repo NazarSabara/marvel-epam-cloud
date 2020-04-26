@@ -1,6 +1,6 @@
 # marvel-epam-cloud
 This is training project based on [Microservice Architecture Pattern](https://martinfowler.com/microservices/) using 
-Spring Cloud, Spring Cloud and Docker.
+Spring Boot, Spring Cloud and Docker.
 
 marvel-epam-cloud is pretty simple application about PvP/TvT battles between different superheroes.
 
