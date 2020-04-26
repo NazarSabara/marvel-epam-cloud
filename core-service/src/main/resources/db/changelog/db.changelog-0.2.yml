@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1563877765929-3
+      author: Nazar Sabara
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: powerstats_pk
+                  autoIncrement: true
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: combat
+                  type: BIGINT
+              - column:
+                  name: durability
+                  type: BIGINT
+              - column:
+                  name: intelligence
+                  type: BIGINT
+              - column:
+                  name: power
+                  type: BIGINT
+              - column:
+                  name: speed
+                  type: BIGINT
+              - column:
+                  name: strength
+                  type: BIGINT
+            tableName: powerstats
+        - addColumn:
+            columns:
+              - column:
+                  name: powerstats_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_powerstats_id
+                    references: powerstats(id)
+            tableName: hero

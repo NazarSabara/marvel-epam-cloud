@@ -17,6 +17,7 @@ import static java.lang.Integer.parseInt;
 public class MappingUtils {
 
     private static int DEFAULT_POWERSTAT_VALUE = 10;
+    private static final String GROUP_DELIMITER = "; ";
 
     public static final Function<AppearanceDTO, AppearanceResource> APPEARANCE_MAPPER =
             appearance ->
@@ -40,14 +41,14 @@ public class MappingUtils {
     public static final Function<HeroDTO, HeroResource> HERO_MAPPER =
             hero ->
                     HeroResource.builder()
-                            .name(hero.getName())
-                            .fullname(hero.getName() + hero.getBiography().getFullName())
+                            .name(hero.getName() + " " + hero.getBiography().getFullName())
+                            .fullname(hero.getBiography().getFullName())
                             .placeOfBirth(hero.getBiography().getPlaceOfBirth())
                             .work(hero.getWork().getOccupation())
                             .photo(hero.getImage().getUrl())
                             .appearance(APPEARANCE_MAPPER.apply(hero.getAppearance()))
                             .powerstats(POWERSTATS_MAPPER.apply(hero.getPowerstats()))
-                            .groups(Set.of(hero.getConnections().getGroupAffiliation().split("; ")))
+                            .groups(Set.of(hero.getConnections().getGroupAffiliation().split(GROUP_DELIMITER)))
                             .build();
 
     private static int mapPowerStat(String value){

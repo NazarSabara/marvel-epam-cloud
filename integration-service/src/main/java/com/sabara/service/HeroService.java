@@ -1,16 +1,14 @@
 package com.sabara.service;
 
 import com.sabara.exception.ResourceNotFoundException;
-import com.sabara.model.resource.AppearanceResource;
 import com.sabara.model.resource.HeroResource;
-import com.sabara.model.resource.PowerstatsResource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.sabara.utils.MappingUtils.*;
+import static com.sabara.utils.MappingUtils.HERO_MAPPER;
 import static java.util.stream.Collectors.toList;
 
 @RestController

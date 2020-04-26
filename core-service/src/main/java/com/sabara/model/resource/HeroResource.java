@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Builder
 public class HeroResource {
 
   private String name;
@@ -14,6 +13,7 @@ public class HeroResource {
   private String work;
   private String photo;
   private AppearanceResource appearance;
+  private PowerstatsResource powerstats;
   private Set<String> groups;
 
 }

@@ -5,14 +5,13 @@ import com.sabara.model.entity.Hero;
 import com.sabara.model.resource.HeroResource;
 import com.sabara.repository.HeroRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
-import static com.sabara.utils.ConversionUtils.HERO_TO_HERO_RESOURCE;
 import static java.util.stream.Collectors.toList;
 
 @Service
@@ -20,15 +19,19 @@ import static java.util.stream.Collectors.toList;
 public class HeroService {
 
   private final HeroRepository heroRepository;
+  private final ModelMapper modelMapper;
 
   public HeroResource getHeroById(long id) {
-    return heroRepository.findById(id).map(HERO_TO_HERO_RESOURCE).orElseThrow(() -> new ResourceNotFoundException(id));
+    return heroRepository
+            .findById(id)
+            .map(hero -> modelMapper.map(hero, HeroResource.class))
+            .orElseThrow(() -> new ResourceNotFoundException(id));
   }
 
   public List<HeroResource> getAllHeroes() {
     return heroRepository.findAll()
             .stream()
-            .map(HERO_TO_HERO_RESOURCE)
+            .map(hero -> modelMapper.map(hero, HeroResource.class))
             .collect(toList());
   }
 
