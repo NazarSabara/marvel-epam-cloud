@@ -6,6 +6,14 @@ marvel-epam-cloud is pretty simple application about PvP/TvT battles between dif
 
 ![github-large](https://user-images.githubusercontent.com/30087741/78811236-348d7400-79d2-11ea-92ec-bfaefaee0a6f.png)
 
+Technology | Version
+------ | --------
+Java | 11
+Spring Boot | 2.2.5
+Spring Cloud | Hoxton.SR3
+Maven | 3.6.3
+docker-compose | 2.1
+
 ##Core-service
 Contains all the heroes supported by this application. Apart from that currently all users also are stored here. When service
 starts all Heroes are fetched to the database through Integration-service.
@@ -13,7 +21,7 @@ starts all Heroes are fetched to the database through Integration-service.
 Method	| Path	| Description	| 
 ------ | ----------- | ------------ |
 GET	| /super-heroes/{id}	| Get Hero by id	| 
-GET	| /super-heroes/all	| Get all Heroes	| 
+GET	| /super-heroes	| Get all Heroes	| 
 GET	| /users/{id}	| Get User by id	| 
 POST	| /users	| Post user	|
 
@@ -23,7 +31,7 @@ Fetches heroes from [Superhero API](https://superheroapi.com/).
 Method	| Path	| Description	| 
 ------ | ----------- | ------------ |
 GET	| /heroes/{id}	| Fetch single Hero from Superhero API	| 
-GET	| /heroes/all	| Fetch all Heroes from Superhero API	| 
+GET	| /heroes| Fetch all Heroes from Superhero API	| 
 
 ## Simulation-service
 Performs fight simulation. Battle flows based on the Powerstats of Heroes:

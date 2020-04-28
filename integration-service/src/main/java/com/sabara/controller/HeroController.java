@@ -23,7 +23,7 @@ public class HeroController {
     return heroService.getHeroById(id);
   }
 
-  @GetMapping("/all")
+  @GetMapping
   public List<HeroResource> getAllHeroes() {
     return heroService.getAllHeroes();
   }

@@ -21,7 +21,7 @@ public class HeroController {
     return ResponseEntity.ok(service.getHeroById(id));
   }
 
-  @GetMapping("/all")
+  @GetMapping
   ResponseEntity<List<HeroResource>> getAllHeroes(){
     return ResponseEntity.ok(service.getAllHeroes());
   }
