@@ -1,6 +1,7 @@
 package com.sabara.model.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.util.HashSet;
 @Entity
 @Table(name = "alliance")
 @RequiredArgsConstructor
+@NoArgsConstructor
 public class Group {
 
   @Id

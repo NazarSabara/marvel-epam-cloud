@@ -24,6 +24,7 @@ function LoginForm() {
                             if(res.status === 401){
                                 throw new Error(res.status)
                             }
+                            localStorage.setItem('auth_header', 'Basic ' + window.btoa(username + ":" + password));
                             history.push("/battle");
                             })
                          .catch(error => {

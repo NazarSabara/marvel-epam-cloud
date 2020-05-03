@@ -17,7 +17,9 @@ function BattlePage() {
 
     const [heroes, setHeroes] = useState([]);
     useEffect(() => {
-        fetch(getHeroesUrl)
+        fetch(getHeroesUrl, {
+               headers: { 'Authorization': localStorage.getItem('auth_header')}
+           })
             .then(res => res.json())
             .then(json => setHeroes(json));
     }, []);

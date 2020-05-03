@@ -7,13 +7,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
-import org.modelmapper.spi.MappingContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Collection;
 import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toSet;
 
@@ -49,7 +47,7 @@ public class ModelMapperConfiguration {
             .map(Group::new)
             .collect(toSet());
 
-    private Converter<Set<Group>, Set<String>> groupToResourceConverter = context ->
+    private Converter<Collection<Group>, Set<String>> groupToResourceConverter = context ->
         context
             .getSource()
             .stream()
