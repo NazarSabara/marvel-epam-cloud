@@ -15,7 +15,7 @@ function LoginForm() {
         <Form class = "auth">
             <Heading className="marginLabel" color="dark-2">Login</Heading>
             <TextInput className="input"value={username} placeholder="username" onChange={(evt) =>  {setUsername(evt.target.value)}}/>
-            <TextInput className="input" type = "password" value={password} type = "password" placeholder="password" onChange={(evt) =>  {setPassword(evt.target.value)}}/>
+            <TextInput className="input" type = "password" value={password} placeholder="password" onChange={(evt) =>  {setPassword(evt.target.value)}}/>
             <Button type="submit" primary label="Login" size="medium" margin="small" onClick={() => {
                      fetch(coreServiceBaseUrl + '/auth', {
                          headers: { 'Authorization': 'Basic ' + window.btoa(username + ":" + password)}

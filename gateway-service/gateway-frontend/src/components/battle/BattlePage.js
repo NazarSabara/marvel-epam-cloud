@@ -59,8 +59,8 @@ function BattlePage() {
                 onChange={(event) => setBattleType(event.target.value)}
             />
             <Form class='listForm'>
-                <HeroList isTeamBattle={battleType == battleTypeOptions[1]} heroes = {heroes.map( (hero) => new DropDownItem(hero.name, hero))} onChange={handleChangeFirst}></HeroList>
-                <HeroList isTeamBattle={battleType == battleTypeOptions[1]} heroes = {heroes.map( (hero) => new DropDownItem(hero.name, hero))} onChange={handleChangeSecond}></HeroList>
+                <HeroList isTeamBattle={battleType === battleTypeOptions[1]} heroes = {heroes.map( (hero) => new DropDownItem(hero.name, hero))} onChange={handleChangeFirst}></HeroList>
+                <HeroList isTeamBattle={battleType === battleTypeOptions[1]} heroes = {heroes.map( (hero) => new DropDownItem(hero.name, hero))} onChange={handleChangeSecond}></HeroList>
             </Form>
             <Button type="button" primary label="Battle" size="medium" margin="small"
              onClick={() => {
