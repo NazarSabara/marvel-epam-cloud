@@ -38,3 +38,5 @@ databaseChangeLog:
             tableName: account
   - include:
       file: classpath:/db/changelog/db.changelog-0.1.yml
+  - include:
+      file: classpath:/db/changelog/db.changelog-0.2.yml

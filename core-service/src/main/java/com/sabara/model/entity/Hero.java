@@ -29,6 +29,9 @@ public class Hero {
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "appearance_id")
   private Appearance appearance;
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "powerstats_id")
+  private Powerstats powerstats;
   @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER, targetEntity = Group.class)
   @JoinTable(name = "hero_group", joinColumns = @JoinColumn(name = "hero_id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
   @JsonIgnoreProperties("heroes")

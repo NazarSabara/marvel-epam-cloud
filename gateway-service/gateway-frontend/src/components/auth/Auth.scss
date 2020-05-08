@@ -2,7 +2,6 @@
     margin-left: 38%;
     margin-top: 10%;
     max-width: 530px;
-    // height: 380px;
 
     border-radius: 10px;
     background-color: rgb(255, 255, 255);
@@ -18,10 +17,7 @@
     }
 }
 
-// body{
-//     background-image: url(../../login_background.jpg);
-//     -webkit-background-size: cover;
-//     -moz-background-size: cover;
-//     -o-background-size: cover;
-//     background-size: cover;
-// }
+body{
+    background-image: url(../../login_background.jpg);
+    background-size: cover;
+}

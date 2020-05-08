@@ -5,6 +5,7 @@ import com.sabara.model.entity.User;
 import com.sabara.model.resource.UserResource;
 import com.sabara.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,16 +15,12 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
   private final UserRepository repository;
+  private final ModelMapper modelMapper;
   private final PasswordEncoder passwordEncoder;
 
   public UserResource getUserById(long id) {
     return repository.findById(id).map(
-        user -> UserResource.builder()
-            .username(user.getUsername())
-            .email(user.getEmail())
-            .birthDate(user.getBirthDate())
-            .info(user.getInfo())
-            .build()
+        user -> modelMapper.map(user, UserResource.class)
     ).orElseThrow(() -> new ResourceNotFoundException(id));
   }
 

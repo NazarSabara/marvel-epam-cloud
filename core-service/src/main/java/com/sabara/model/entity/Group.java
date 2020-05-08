@@ -1,6 +1,7 @@
 package com.sabara.model.entity;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -9,6 +10,7 @@ import java.util.HashSet;
 @Data
 @Entity
 @Table(name = "alliance")
+@Accessors(chain = true)
 public class Group {
 
   @Id

@@ -20,5 +20,7 @@ event:
   listener:
     enabled: true
 
+ui_origin: http://localhost:8060
+
 server:
   port: 8083

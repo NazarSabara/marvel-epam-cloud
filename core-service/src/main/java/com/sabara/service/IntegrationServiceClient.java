@@ -15,6 +15,6 @@ public interface IntegrationServiceClient {
   @GetMapping("/{id}")
   Optional<HeroResource> getHeroById(@PathVariable Long id);
 
-  @GetMapping("/")
+  @GetMapping
   List<HeroResource> getAllHeroes();
 }
