@@ -42,7 +42,7 @@ public class ModelMapperConfiguration {
     private Converter<Set<String>, Set<Group>> groupToEntityConverter = context ->
         context.getSource().stream()
             .filter(StringUtils::isNotBlank)
-            .map(Group::new)
+            .map(group -> new Group().setName(group))
             .collect(toSet());
 
     private Converter<Collection<Group>, Set<String>> groupToResourceConverter = context ->
