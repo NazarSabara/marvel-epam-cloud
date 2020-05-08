@@ -6,15 +6,15 @@ marvel-epam-cloud is pretty simple application about PvP/TvT battles between dif
 
 ![github-large](https://user-images.githubusercontent.com/30087741/78811236-348d7400-79d2-11ea-92ec-bfaefaee0a6f.png)
 
-Technology | Version
------- | --------
-Java | 11
-Spring Boot | 2.2.5
-Spring Cloud | Hoxton.SR3
-Maven | 3.6.3
-docker-compose | 2.1
+Technology | Version|
+------ | --------|
+Java | 11|
+Spring Boot | 2.2.5|
+Spring Cloud | Hoxton.SR3|
+Maven | 3.6.3|
+docker-compose | 2.1 |
 
-##Core-service
+## Core-service
 Contains all the heroes supported by this application. Apart from that currently all users also are stored here. When service
 starts all Heroes are fetched to the database through Integration-service.
 
