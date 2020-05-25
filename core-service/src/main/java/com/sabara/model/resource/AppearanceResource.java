@@ -1,6 +1,5 @@
 package com.sabara.model.resource;
 
-import lombok.Builder;
 import lombok.Data;
 
 @Data

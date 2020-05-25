@@ -1,7 +1,7 @@
 package com.sabara.model.resource;
 
 import java.time.LocalDate;
-import lombok.Builder;
+
 import lombok.Data;
 
 @Data

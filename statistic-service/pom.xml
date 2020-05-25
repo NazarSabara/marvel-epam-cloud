@@ -2,19 +2,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>simulation-service</artifactId>
-	<name>simulation-service</name>
-	<description>Simulation service</description>
+	<artifactId>statistic-service</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>statistic-service</name>
+	<description>Gather information about most used heroes, their winrate and other information</description>
 
 	<parent>
 		<groupId>com.sabara</groupId>
 		<artifactId>marvel-epam-cloud</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-
-	<properties>
-		<collection-utils-verstion>4.0</collection-utils-verstion>
-	</properties>
 
 	<dependencies>
 		<dependency>
@@ -23,8 +20,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb-reactive</artifactId>
 		</dependency>
 
 		<dependency>
@@ -33,31 +30,14 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-openfeign</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-collections4</artifactId>
-			<version>${collection-utils-verstion}</version>
-		</dependency>
-
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>${apache-commons.version}</version>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 

@@ -4,6 +4,9 @@ eureka:
       defaultZone: http://discovery-server:8761/eureka/
 
 ui_origin: http://localhost:8060
+statistic-service:
+  baseUrl: http://statistic-service
+
 
 server:
   port: 8082

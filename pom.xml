@@ -30,6 +30,7 @@
 		<module>config-server</module>
 		<module>discovery-server</module>
 		<module>gateway-service</module>
+		<module>statistic-service</module>
 	</modules>
 
 	<dependencyManagement>

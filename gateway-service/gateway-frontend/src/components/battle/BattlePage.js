@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import HeroList from './HeroList/HeroList';
 import BattleResults from './BattleResults';
-import {getHeroesUrl, startBattleUrl} from './BattleConstants';
+import {getHeroesUrl, startBattleUrl, battleTypeOptions} from './BattleConstants';
 import {Form, RadioButtonGroup, Button} from 'grommet';
 import './BattlePage.scss';
 
@@ -31,7 +31,6 @@ function BattlePage() {
 
     const [results, setResults] = useState({});
 
-    const battleTypeOptions = ['PVP', 'TVT']
     const [battleType, setBattleType] = useState('PVP');
     const [firstTeam, setFirstTeam] = useState([]);
     const [secondTeam, setSecondTeam] = useState([]);

@@ -5,9 +5,12 @@ import com.sabara.dto.HeroDTO;
 import com.sabara.exception.UnprocessableEntityException;
 import com.sabara.model.resource.BattleMap;
 import com.sabara.model.resource.BattleResults;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.time.StopWatch;
 import org.apache.commons.lang3.tuple.Pair;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -27,7 +30,10 @@ import static java.util.stream.Collectors.toList;
 import static org.apache.commons.lang.BooleanUtils.toInteger;
 
 @Service
+@RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class BattleService {
+
+    private final StatisticServiceClient statisticService;
 
     public BattleResults battle(BattleDTO battle){
         validate(battle);
@@ -55,15 +61,22 @@ public class BattleService {
             });
 
         executionTime.stop();
-
-        results.setWinner(results.getBattleType().getWinnerPrefix() + getWinnerIndex(heroes.getFirst().getKey()));
+        results.setWinnerTag(results.getBattleType().getWinnerPrefix() + getWinnerIndex(heroes.getFirst().getKey()));
         results.setSurvivors(requireNonNull(heroes)
                 .stream()
                 .map(hero -> format(WINNER_PATTERN, hero.getValue().getName(), hero.getValue().getPowerstats().getDurability()))
                 .collect(toList()));
         results.setBattleDuration(calculateBattleDuration(executionTime.getTime()));
         results.setMap(battle.getMap());
+        if(heroes.getFirst().getKey()){
+            results.setWinners(battle.getFirstTeam().stream().map(HeroDTO::getName).collect(toList()));
+            results.setLosers(battle.getSecondTeam().stream().map(HeroDTO::getName).collect(toList()));
+        } else {
+            results.setWinners(battle.getSecondTeam().stream().map(HeroDTO::getName).collect(toList()));
+            results.setLosers(battle.getFirstTeam().stream().map(HeroDTO::getName).collect(toList()));
+        }
 
+        statisticService.saveBattleResults(Mono.just(results));
         return results;
     }
 

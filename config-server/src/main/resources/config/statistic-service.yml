@@ -1,0 +1,10 @@
+spring:
+  data:
+    mongodb:
+      host: statistic-db
+      port: 27017
+      database: statistic
+      username: mongo
+      password: mongo
+
+ui_origin: http://localhost:8060

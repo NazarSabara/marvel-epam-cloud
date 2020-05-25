@@ -17,6 +17,23 @@ services:
         timeout: 5s
         retries: 5
 
+    statistic-db:
+      image: mongo:4.2.6
+      restart: on-failure
+      environment:
+        - MONGO_INITDB_ROOT_USERNAME=mongo
+        - MONGO_INITDB_ROOT_PASSWORD=mongo
+        - MONGO_INITDB_DATABASE=statistic
+      ports:
+        - 27017:27017
+      volumes:
+        - db-data:/var/lib/mongo
+      healthcheck:
+        test: echo 'db.runCommand("ping").ok'
+        interval: 10s
+        timeout: 5s
+        retries: 5
+
     config-server:
       build: ./config-server
       restart: on-failure
@@ -68,6 +85,15 @@ services:
         integration-service:
           condition: service_healthy
         hero-db:
+          condition: service_healthy
+
+    statistic-service:
+      build: ./statistic-service
+      restart: on-failure
+      ports:
+        - 8084:8084
+      depends_on:
+        statistic-db:
           condition: service_healthy
 
 volumes:
