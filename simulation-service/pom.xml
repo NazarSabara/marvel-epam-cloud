@@ -13,7 +13,7 @@
 	</parent>
 
 	<properties>
-		<collection-utils-verstion>4.0</collection-utils-verstion>
+		<collection-utils-verstion>4.1</collection-utils-verstion>
 	</properties>
 
 	<dependencies>
